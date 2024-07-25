@@ -59,7 +59,12 @@ namespace StockManagementWebApp.Data
                 .WithMany()
                 .HasForeignKey(oi => oi.ProductId); // Foreign key
 
-            // Optional: Configure table names if they differ from DbSet names
+            // Configure the decimal property
+            modelBuilder.Entity<Product>()
+                .Property(p => p.Price)
+                .HasColumnType("decimal(18,2)"); // or use .HasPrecision(18, 2)
+
+       // Optional: Configure table names if they differ from DbSet names
             modelBuilder.Entity<Product>().ToTable("Products");
             modelBuilder.Entity<Order>().ToTable("Orders");
             modelBuilder.Entity<CartItems>().ToTable("CartItems");

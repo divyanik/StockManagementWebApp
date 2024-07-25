@@ -12,8 +12,8 @@ using StockManagementWebApp.Data;
 namespace StockManagementWebApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240723163711_initCreate")]
-    partial class initCreate
+    [Migration("20240725022039_tablenamechange")]
+    partial class tablenamechange
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,28 +24,7 @@ namespace StockManagementWebApp.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("StockManagementWebApp.Models.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Orders", (string)null);
-                });
-
-            modelBuilder.Entity("StockManagementWebApp.Models.OrderItem", b =>
+            modelBuilder.Entity("StockManagementWebApp.Models.CartItems", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -68,7 +47,28 @@ namespace StockManagementWebApp.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItems", (string)null);
+                    b.ToTable("CartItems", (string)null);
+                });
+
+            modelBuilder.Entity("StockManagementWebApp.Models.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("StockManagementWebApp.Models.Product", b =>
@@ -125,21 +125,10 @@ namespace StockManagementWebApp.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
-            modelBuilder.Entity("StockManagementWebApp.Models.Order", b =>
-                {
-                    b.HasOne("StockManagementWebApp.Models.User", "User")
-                        .WithMany("Orders")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("StockManagementWebApp.Models.OrderItem", b =>
+            modelBuilder.Entity("StockManagementWebApp.Models.CartItems", b =>
                 {
                     b.HasOne("StockManagementWebApp.Models.Order", "Order")
-                        .WithMany("OrderItems")
+                        .WithMany("CartItems")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -157,7 +146,18 @@ namespace StockManagementWebApp.Migrations
 
             modelBuilder.Entity("StockManagementWebApp.Models.Order", b =>
                 {
-                    b.Navigation("OrderItems");
+                    b.HasOne("StockManagementWebApp.Models.User", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("StockManagementWebApp.Models.Order", b =>
+                {
+                    b.Navigation("CartItems");
                 });
 
             modelBuilder.Entity("StockManagementWebApp.Models.User", b =>

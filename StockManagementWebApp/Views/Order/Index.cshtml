@@ -28,8 +28,8 @@
                         <td>@item.Quantity</td>
                         <td>@item.Product.Price</td>
                         <td>
-                            <a asp-action="EditCartItem" asp-route-cartItemId="@item.Id">Edit</a> |
-                            <a asp-action="DeleteCartItem" asp-route-cartItemId="@item.Id">Delete</a>
+                            <a asp-action="EditCartItem" asp-controller="Order" asp-route-cartItemId="@item.Id">Edit</a> |
+                            <a asp-action="DeleteCartItem" asp-controller="Order" asp-route-cartItemId="@item.Id">Delete</a>
                         </td>
                     </tr>
                 }

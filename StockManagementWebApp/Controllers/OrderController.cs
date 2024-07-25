@@ -45,7 +45,7 @@ public class OrderController : Controller
         }
 
         var userId = int.Parse(HttpContext.Session.GetString("UserId"));
-        var order = _context.Orders.FirstOrDefault(o => o.UserId == userId && !o.CartItems.Any());
+        Order order = _context.Orders.FirstOrDefault(o => o.UserId == userId);
 
         if (order == null)
         {
@@ -65,6 +65,8 @@ public class OrderController : Controller
             OrderId = order.Id,
             Quantity = quantity
         };
+
+
 
         _context.CartItems.Add(cartItem);
         _context.SaveChanges();
@@ -127,6 +129,10 @@ public class OrderController : Controller
 
         _context.CartItems.Remove(cartItem);
         _context.SaveChanges();
+
+        if (!_context.CartItems.Any())
+            _context.Remove(_context.Orders);
+            _context.SaveChanges();
 
         return RedirectToAction("Index");
     }
