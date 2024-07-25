@@ -1,0 +1,40 @@
+﻿@model IEnumerable<StockManagementWebApp.Models.Order>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Orders</title>
+</head>
+<body>
+    <h2>My Orders</h2>
+    @foreach (var order in Model)
+    {
+        <h3>Order @order.Id</h3>
+        <p>Order Date: @order.OrderDate</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in order.CartItems)
+                {
+                    <tr>
+                        <td>@item.Product.Name</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Product.Price</td>
+                        <td>
+                            <a asp-action="EditCartItem" asp-route-cartItemId="@item.Id">Edit</a> |
+                            <a asp-action="DeleteCartItem" asp-route-cartItemId="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</body>
+</html>

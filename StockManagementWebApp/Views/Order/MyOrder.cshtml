@@ -1,0 +1,23 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IEnumerable<StockManagementWebApp.Models.Order>
+
+<h2>My Orders</h2>
+
+<ul>
+    @foreach (var order in Model)
+    {
+        <li>
+            Order ID: @order.Id - Date: @order.OrderDate
+            <ul>
+                @foreach (var item in order.CartItems)
+                {
+                    <li>@item.Product.Name - Quantity: @item.Quantity</li>
+                }
+            </ul>
+        </li>
+    }
+</ul>

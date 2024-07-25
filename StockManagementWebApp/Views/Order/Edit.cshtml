@@ -1,0 +1,23 @@
+﻿@model StockManagementWebApp.Models.CartItems
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Cart Item</title>
+</head>
+<body>
+    <h2>Edit Cart Item</h2>
+    <form asp-action="EditCartItem" method="post">
+        <input type="hidden" name="cartItemId" value="@Model.Id" />
+        <div>
+            <label>Product:</label>
+            <span>@Model.Product.Name</span>
+        </div>
+        <div>
+            <label>Quantity:</label>
+            <input type="number" name="quantity" value="@Model.Quantity" />
+        </div>
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>

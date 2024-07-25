@@ -1,0 +1,50 @@
+﻿@model IEnumerable<StockManagementWebApp.Models.Product>
+@inject IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Main Page</title>
+</head>
+<body>
+    <div>
+        @if (HttpContextAccessor.HttpContext.Session.GetString("UserId") == null)
+        {
+            <a href="@Url.Action("Login", "Account")">Login</a>
+        }
+        else
+        {
+            <a href="@Url.Action("Logout", "Account")">Logout</a>
+        }
+    </div>
+
+    <h2>Products</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Location</td>
+                    <td>@product.Price</td>
+                    <td>
+                        <form asp-action="AddToCart" asp-controller="Order" method="post">
+                            <input type="hidden" name="productId" value="@product.Id" />
+                            <input type="number" name="quantity" value="1" />
+                            <button type="submit">Add to Cart</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
